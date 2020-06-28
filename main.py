@@ -32,16 +32,16 @@ def crunch(divider, starting):
         print("Kicking out of while loop.", time.time()-1593360000)
 
 @app.route('/')
-def sessions():
+def sessions(methods=['GET', 'POST']):
     return render_template('session.html')
 
 @socketio.on('connect')
-def connect():
+def connect(methods=['GET', 'POST']):
     print("connected", time.time())
-    socketio.emit('msg from server', {"message": "server connected", "time": time.time()-1593360000})
+    socketio.emit('msg from server', {"message": "server connected TIN", "time": time.time()-1593360000})
 
 @socketio.on('disconnect')
-def disconnect():
+def disconnect(methods=['GET', 'POST']):
     global most_recent
     most_recent = 0
 
@@ -52,7 +52,7 @@ def receive(data, methods=['GET', 'POST']):
     socketio.emit('msg from server', {"message": responding, "time": time.time()-1593360000})
 
 @socketio.on('go!')
-def go(data):
+def go(data, methods=['GET', 'POST']):
     global most_recent
     starting = time.time()
     most_recent = starting
@@ -66,7 +66,7 @@ def go(data):
     crunch(divider, starting)
 
 @socketio.on('stop!')
-def stop(data):
+def stop(data, methods=['GET', 'POST']):
     socketio.sleep(0)
     print("client wants to stop", time.time()-1593360000)
     socketio.emit("msg from server", {"message": "hi client, I hear you that you want to stop", "time": time.time()-1593360000})
