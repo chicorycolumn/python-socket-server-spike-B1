@@ -38,7 +38,6 @@ def crunch(divider, starting):
 def sessions(methods=['GET', 'POST']):
     return render_template('session.html')
 
-@socketio.event #screw
 def send_message(label, data):
     print('This message is being sent to the client: ', data)
     socketio.emit(label, data)
@@ -46,7 +45,7 @@ def send_message(label, data):
 @socketio.on('connect')
 def connect(methods=['GET', 'POST']):
     print("connected", time.time())
-    send_message('msg from server', {"message": "server connected: element Astatine", "time": time.time()-1593360000})
+    send_message('msg from server', {"message": "server connected: element Tellurium", "time": time.time()-1593360000})
 
 @socketio.on('disconnect')
 def disconnect(methods=['GET', 'POST']):
