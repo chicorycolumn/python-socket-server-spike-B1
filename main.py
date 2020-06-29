@@ -8,7 +8,7 @@ from flask_socketio import SocketIO
 eventlet.monkey_patch()
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", transports=['websocket'])
 
 automatic_timeout_value = 30
 most_recent = 0
