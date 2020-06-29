@@ -39,14 +39,14 @@ def sessions(methods=['GET', 'POST']):
     return render_template('session.html')
 
 @socketio.event #screw
-def send_message(sid, label, data):
+def send_message(label, data):
     print('This message is being sent to the client: ', data)
     socketio.emit(label, data)
 
 @socketio.on('connect')
-def connect(sid, methods=['GET', 'POST']):
+def connect(methods=['GET', 'POST']):
     print("connected", time.time())
-    send_message(sid, 'msg from server', {"message": "server connected: element Astatine", "time": time.time()-1593360000})
+    send_message('msg from server', {"message": "server connected: element Astatine", "time": time.time()-1593360000})
 
 @socketio.on('disconnect')
 def disconnect(methods=['GET', 'POST']):
@@ -54,10 +54,10 @@ def disconnect(methods=['GET', 'POST']):
     most_recent = 0
 
 @socketio.on('msg from client')
-def receive(sid, data, methods=['GET', 'POST']):
+def receive(data, methods=['GET', 'POST']):
     print('received msg: ' + str(data), time.time())
     responding = "server received " + str(data["message"])
-    send_message(sid, 'msg from server', {"message": responding, "time": time.time()-1593360000})
+    send_message('msg from server', {"message": responding, "time": time.time()-1593360000})
 
 @socketio.on('go!')
 def go(data, methods=['GET', 'POST']):
